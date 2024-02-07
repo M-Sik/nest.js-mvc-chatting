@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Render('index') // views 폴더 안에 index.hbs파일을 찾아 랜더링해줌
+  root() {
+    return {
+      data: {
+        title: 'Chattings',
+        copyright: 'kim myeong sik',
+      },
+    };
   }
 }
