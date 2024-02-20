@@ -1,4 +1,4 @@
-const soket = io('/');
+const soket = io('/chattings');
 const getElementById = (id) => document.getElementById(id) || null;
 
 const helloStrangerElement = getElementById('hello_stranger');

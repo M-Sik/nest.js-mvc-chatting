@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { Socket } from 'dgram';
 
-@WebSocketGateway()
+@WebSocketGateway({ namespace: 'chattings' })
 export class ChatsGateway {
   @SubscribeMessage('new_user') // 소켓을 통해 주고받을 이벤트명을 기입
   handleNewUser(
