@@ -8,7 +8,7 @@ import {
   SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
-import { Socket } from 'dgram';
+import { Socket } from 'socket.io';
 
 @WebSocketGateway({ namespace: 'chattings' })
 export class ChatsGateway
@@ -25,11 +25,11 @@ export class ChatsGateway
     this.logger.log('init');
   }
   // handleConnection => 소켓이 커넥트 되면 실행되는 메서드
-  handleConnection(@ConnectedSocket() socket: any) {
+  handleConnection(@ConnectedSocket() socket: Socket) {
     this.logger.log(`connection : ${socket.id} ${socket.nsp.name}`);
   }
   // handleDiscconnect => 소켓 연결이 끊긴 직후 실행되는 메서드
-  handleDisconnect(@ConnectedSocket() socket: any) {
+  handleDisconnect(@ConnectedSocket() socket: Socket) {
     this.logger.log(`connection : ${socket.id} ${socket.nsp.name}`);
   }
 
@@ -38,7 +38,8 @@ export class ChatsGateway
     @MessageBody() username: string,
     @ConnectedSocket() socket: Socket,
   ) {
-    console.log(username);
-    socket.emit('hello_user', 'hello' + username);
+    // 브로드 캐스팅
+    socket.broadcast.emit('user_connected', username);
+    return username;
   }
 }
