@@ -42,4 +42,14 @@ export class ChatsGateway
     socket.broadcast.emit('user_connected', username);
     return username;
   }
+
+  @SubscribeMessage('submit_chat') // 소켓을 통해 주고받을 이벤트명을 기입
+  handleSubmitChat(
+    @MessageBody() chat: string,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    console.log('???', chat);
+    // 브로드 캐스팅
+    socket.broadcast.emit('new_chat', { chat, username: socket.id });
+  }
 }
