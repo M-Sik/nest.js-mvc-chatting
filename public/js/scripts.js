@@ -14,6 +14,7 @@ socket.on('new_chat', (data) => {
   const { chat, username } = data;
   drawNewChat(`${username}: ${chat}`);
 });
+socket.on('disconnect_user', (username) => drawNewChat(`${username}: bye...`));
 
 // event callback 함수
 const handleSubmit = (event) => {
